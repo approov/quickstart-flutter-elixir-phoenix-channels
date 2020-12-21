@@ -5,7 +5,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.1
-  phoenix_wings: ^0.2.1
+  phoenix_wings:
+    path: ./approov/phoenix_wings
   approovsdkflutter:
     path: ./approov/flutter-httpclient/approovsdkflutter
 
@@ -23,8 +24,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  assets:
-    - ./approov-initial.config
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -35,6 +34,8 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+  assets:
+    - approov-initial.config
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

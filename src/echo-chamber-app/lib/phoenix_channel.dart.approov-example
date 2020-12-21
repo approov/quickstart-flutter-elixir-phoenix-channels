@@ -18,7 +18,7 @@ class PhoenixChannelSocket {
     final socket_options = new PhoenixSocketOptions(
       params: {
         "Authorization": _authToken,
-        "Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
+        "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
       }
     );
 
@@ -50,7 +50,7 @@ class PhoenixChannelSocket {
       channelName,
       {
         "Authorization": _authToken,
-        "Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
+        "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
       });
 
     // Setup listeners for channel events
@@ -74,7 +74,7 @@ class PhoenixChannelSocket {
         payload: {
           "message": message,
           "Authorization": _authToken,
-          "Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken, token_type: message)
+          "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken, token_type: message)
         }
     );
   }

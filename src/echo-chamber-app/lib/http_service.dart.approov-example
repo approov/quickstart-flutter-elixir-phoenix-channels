@@ -33,6 +33,7 @@ class HttpService {
 
   static final httpClient = () {
     final approovClient = ApproovClient();
+    approovClient.approovHeader = Approovsdkflutter.X_APPROOV_HEADER;
 
     // @TODO Cannot be set here until the appoovsdkflutter is changed to not
     //       throw when the token binding header is missing.
@@ -47,13 +48,13 @@ class HttpService {
 
   static fetchApproovToken({token_type = ""}) async {
     switch(token_type) {
-      // For demo propose only
+      // For demo purpose only
       case "token:invalid":
         return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjQ3MDg3ODMyMDV9.cG01T9zBv_NzcNdIHU3lWXKNsWoAktOJ9Xt6mA8uTFs";
 
       default:
-        var token =  await Approovsdkflutter.fetchApproovToken(apiHost).then((value) => value.token);
-        return token.toString();
+        String token = await Approovsdkflutter.fetchApproovToken(apiHost).then((value) => value.token);
+        return token;
     }
   }
 

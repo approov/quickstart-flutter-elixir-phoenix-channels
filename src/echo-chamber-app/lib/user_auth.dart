@@ -25,7 +25,7 @@ class UserAuth {
       return null;
     });
 
-    if (response == null) {
+    if (response == null || response.statusCode != 200) {
       return null;
     }
 
@@ -52,7 +52,7 @@ class UserAuth {
       return null;
     });
 
-    if (response == null) {
+    if (response == null || response.statusCode != 200) {
       return success;
     }
 
