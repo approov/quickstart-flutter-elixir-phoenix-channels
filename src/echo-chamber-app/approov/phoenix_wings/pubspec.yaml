@@ -1,0 +1,19 @@
+name: phoenix_wings
+description: Phoenix Channel client for Dart
+version: 0.2.1
+author: mfeckie<mfeckie@gmail.com>
+homepage: https://github.com/mfeckie/phoenix_wings
+
+dependencies:
+  approov_web_socket:
+    path: ../approov_web_socket
+
+dev_dependencies:
+  dartdoc: "0.28.3+2"
+  test: "1.6.2"
+  mockito: "^3.0.0"
+  stream_channel: "2.0.0"
+  intl: "^0.15.6"
+
+environment:
+  sdk: '>=2.2.0 <3.0.0'
