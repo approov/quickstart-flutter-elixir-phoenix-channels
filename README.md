@@ -64,25 +64,25 @@ Clone the Approov Flutter plugin into the `approov` folder:
 ```text
 git clone https://github.com/approov/quickstart-flutter-httpclient.git approov
 ```
-> **NOTE:** The Approov Flutter plugin will be located att `your-project/approov` folder
+> **NOTE:** The Approov Flutter plugin will be located at `your-project/approov` folder
 
 Download the Android Approov SDK and add it to the Approov plugin:
 
 If you want to build for Android then download the Android Approov SDK and add it to the Approov plugin, by executing from the root of your project:
 
 ```text
-approov sdk -getLibrary approov/flutter-httpclient/approovsdkflutter/android/approovsdk/approovsdk.aar
+approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/android/approov-sdk.aar
 ```
-> **NOTE:** The approov command is downloading the Approov SDK into the folder `your-project/approov/flutter-httpclient/approovsdkflutter/android/approovsdk/approovsdk.aar`
+> **NOTE:** The approov command is downloading the Approov SDK into the folder `your-project/approov/flutter-httpclient/approov_http_client/android/approov-sdk.aar`
 
 Instead, if you want to build for iOS execute from the root of your project:
 
 ```text
 approov sdk -getLibrary approov.zip
-unzip approov.zip -d approov/flutter-httpclient/approovsdkflutter/ios
+unzip approov.zip -d approov/flutter-httpclient/approov_http_client/ios
 rm -rf approov.zip
 ```
-> **NOTE:** The unzip command is unzipping the Approov library into `your-project/approov/flutter-httpclient/approovsdkflutter/ios`
+> **NOTE:** The unzip command is unzipping the Approov library into `your-project/approov/flutter-httpclient/approov_http_client/ios`
 
 Retrieve the `approov-initial.config` file and save it to the root of your project:
 
@@ -95,8 +95,8 @@ Edit your `pubspec.yaml` and add the Approov SDK and the `approov-initial.config
 
 ```yml
 dependencies:
-  approovsdkflutter:
-    path: ./approov/flutter-httpclient/approovsdkflutter
+  approov_http_client:
+    path: ./approov/flutter-httpclient/approov_http_client
 
 flutter:
   assets:
@@ -113,7 +113,7 @@ The last step is to use the Approov Http Client in your code. This is a drop in 
 So, wherever you have your HttpClient defined, you should replace it with the drop-in Approov HttpClient:
 
 ```dart
-import 'package:approovsdkflutter/approovsdkflutter.dart';
+import 'package:approov_http_client/approov_http_client.dart';
 
 //static final httpClient = new http.Client();
 static final httpClient = ApproovClient();
@@ -122,7 +122,7 @@ static final httpClient = ApproovClient();
 Full example code for a Phoenix Channels mobile app:
 
 ```dart
-import 'package:approovsdkflutter/approovsdkflutter.dart';
+import 'package:approov_http_client/approov_http_client.dart';
 
 class PinnedHttp {
   static String apiBaseUrl = 'YOUR_API_SERVER_BASE_URL_HERE';
@@ -154,8 +154,6 @@ class UserAuth {
 
 }
 ```
-
-> **DISCLAIMER:** The above code doesn't include a WebSocketLink because we are working in a solution that allows to secure it with Approov.
 
 [TOC](#toc)
 

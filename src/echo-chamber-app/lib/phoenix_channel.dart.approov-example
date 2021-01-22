@@ -12,9 +12,6 @@ class PhoenixChannelSocket {
   static connect() async {
     _authToken = await _getAuthenticationToken();
 
-    // The annoying bit here is that the Approov token will be added as a query
-    // parameter in the url:
-    //   - http://10.0.2.2:8002/socket/websocket?approov-token=the-token-here&vsn=2.0.0
     final socket_options = new PhoenixSocketOptions(
       params: {
         "Authorization": _authToken,
