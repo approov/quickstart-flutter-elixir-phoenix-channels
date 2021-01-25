@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:approovsdkflutter/approovsdkflutter.dart';
+import 'package:approov_http_client/approov_http_client.dart';
 
 class HttpService {
 
@@ -33,11 +33,11 @@ class HttpService {
 
   static final httpClient = () {
     final approovClient = ApproovClient();
-    approovClient.approovHeader = Approovsdkflutter.X_APPROOV_HEADER;
+    approovClient.approovHeader = ApproovService.X_APPROOV_HEADER;
 
     // @TODO Cannot be set here until the appoovsdkflutter is changed to not
     //       throw when the token binding header is missing.
-    // Approovsdkflutter.setBindingHeader('Authorization');
+    // ApproovService.setBindingHeader('Authorization');
 
     return approovClient;
   } ();
@@ -53,7 +53,7 @@ class HttpService {
         return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjQ3MDg3ODMyMDV9.cG01T9zBv_NzcNdIHU3lWXKNsWoAktOJ9Xt6mA8uTFs";
 
       default:
-        String token = await Approovsdkflutter.fetchApproovToken(apiHost).then((value) => value.token);
+        String token = await ApproovService.fetchApproovToken(apiHost).then((value) => value.token);
         return token;
     }
   }
@@ -61,7 +61,7 @@ class HttpService {
   static fetchApproovTokenBinding(String data, {token_type = ""}) {
     // @TODO Unable to use token binding until the Approov SDK is changed to not
     //       throw when the token binding header is missing.
-    // Approovsdkflutter.setDataHashInToken(data);
+    // ApproovService.setDataHashInToken(data);
 
     return fetchApproovToken(token_type: token_type);
   }

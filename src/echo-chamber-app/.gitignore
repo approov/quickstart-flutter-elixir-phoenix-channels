@@ -10,6 +10,6 @@ build/
 
 .idea/
 
-approov/
+approov/flutter-httpclient/
 approov-initial.config
 .flutter-plugins-dependencies
