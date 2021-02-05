@@ -62,13 +62,11 @@ mkdir approov
 Clone the Approov Flutter plugin into the `approov` folder:
 
 ```text
-git clone https://github.com/approov/quickstart-flutter-httpclient.git approov
+git clone https://github.com/approov/quickstart-flutter-httpclient.git approov/flutter-httpclient
 ```
 > **NOTE:** The Approov Flutter plugin will be located at `your-project/approov` folder
 
-Download the Android Approov SDK and add it to the Approov plugin:
-
-If you want to build for Android then download the Android Approov SDK and add it to the Approov plugin, by executing from the root of your project:
+If you want to build for Android then download the Android Approov SDK and add it to the Approov HTTP Client plugin, by executing from the root of your project:
 
 ```text
 approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/android/approov-sdk.aar
@@ -78,11 +76,9 @@ approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/android/a
 Instead, if you want to build for iOS execute from the root of your project:
 
 ```text
-approov sdk -getLibrary approov.zip
-unzip approov.zip -d approov/flutter-httpclient/approov_http_client/ios
-rm -rf approov.zip
+approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/ios/approov.xcframework
 ```
-> **NOTE:** The unzip command is unzipping the Approov library into `your-project/approov/flutter-httpclient/approov_http_client/ios`
+> **NOTE:** The approov command is downloading the Approov SDK into `your-project/approov/flutter-httpclient/approov_http_client/ios`
 
 Retrieve the `approov-initial.config` file and save it to the root of your project:
 
@@ -168,7 +164,7 @@ Add it with:
 approov api -add your.api.domain.com
 ```
 
-> **NOTE:** This only needs to be done one time per each API, not for every time you register a mobile app binary.
+> **NOTE:** This only needs to be done one time per API, not for every time you register a mobile app binary.
 
 The Approov cloud service will not issue Approov tokens for your mobile app if you forget this step, even if the mobile app binary is registered and no tampering is detected with the binary or the environment is running on.
 
@@ -188,17 +184,23 @@ After the build is finished you can then register the resulting binary with the 
 
 #### For Development:
 
-From the root of your project execute:
+For Android: from the root of your project execute:
 
-```
+```text
 approov registration -add build/app/outputs/flutter-apk/app-debug.apk --expireAfter 1h
+```
+
+For iOS it is necessary to build an app archive (.ipa extension), to sign and to export it. Install the app's .ipa on the device in order to ensure that the installed version and the registered version are the same. Assuming you exported your .ipa to `Runner/app.ipa` at the root of your project, the registration command is:
+
+```text
+approov registration -add Runner/app.ipa --expireAfter 1h
 ```
 
 > **IMPORTANT:** During development always use the `--expireAfter` flag with an expiration that best suits your needs, using `h` for hours and `d` for days. By default, an app registration is permanent and will remain in the Approov cloud database until it is explicitly removed. Permanent app registrations should be used to identify apps that are being published to production. Read more in our docs at [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations).
 
 This registration step is required for each time you change your code, even if you are just commenting out a line of code or fixing a typo in a variable.
 
-The Flutter hot reload functionality doesn't write to the disk any changes made to the code, therefore you cannot re-register the mobile app without stopping it and start it again, thus for a better development work-flow you may want to [whitelist](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) your mobile device with the Approov cloud service. This way the mobile app always get valid Approov tokens without the need to re-register it for each modification made to the code.
+The Flutter hot reload functionality doesn't write to the disk any changes made to the code, therefore you cannot re-register the mobile app without stopping it and starting it again, thus for a better development work-flow you may want to [whitelist](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) your mobile device with the Approov cloud service. This way the mobile app always get valid Approov tokens without the need to re-register it for each modification made to the code.
 
 For example:
 
