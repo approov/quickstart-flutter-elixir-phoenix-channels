@@ -38,7 +38,7 @@ Now, from inside the `src/echo-chamber-app` folder, clone the Approov Flutter su
 git clone https://github.com/approov/approov-flutter-packages.git approov
 ```
 
-> **NOTE:** The Approov Flutter supporting packages _must_ be cloned first, then the Approov HTTP Client package or `git clone` will fail with the error: `src/app-final/approov` directory not empty.
+> **NOTE:** The Approov Flutter supporting packages _must_ be cloned first, otherwise the `git clone`  of the Approov HTTP Client package will fail with the error: `src/app-final/approov` directory not empty.
 
 Clone the Approov Flutter plugin into the `src/echo-chamber-app/approov` folder, by executing from `src/echo-chamber-app`:
 
@@ -56,11 +56,9 @@ approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/android/a
 Instead, if you want to build for iOS execute from `src/echo-chamber-app` folder:
 
 ```text
-approov sdk -getLibrary approov.zip
-unzip approov.zip -d approov/flutter-httpclient/approov_http_client/ios
-rm -rf approov.zip
+approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/ios/approov.xcframework
 ```
-> **NOTE:** The unzip command is unzipping the Approov library into `src/echo-chamber-app/approov/flutter-httpclient/approov_http_client/ios`
+> **NOTE:** The approov command is downloading the Approov SDK into the folder `src/echo-chamber-app/approov/flutter-httpclient/approov_http_client/ios`
 
 Next, retrieve the `approov-initial.config` and save it into `src/echo-chamber-app/approov-initial.config`. From inside the `src/echo-chamber-app` folder execute:
 
@@ -106,16 +104,25 @@ First, launch the Echo Chamber mobile app by hitting the correspondent button in
 
 Now, you can go ahead and register the resulting binary with the Approov CLI tool. For development execute from inside the `src/echo-chamber-app` folder:
 
-```
+For Android:
+
+```text
 approov registration -add build/app/outputs/flutter-apk/app-debug.apk --expireAfter 1h
 ```
+
+For iOS: It is necessary to build an app archive (.ipa extension) and export it to a convenient location, for example the `quickstart-flutter-elixir-phoenix-channels` directory. Install the app's .ipa on the device in order to ensure that the installed version and the registered version are the same. Assuming you have built an app archive, signed it and exported it to `quickstart-flutter-elixir-phoenix-channels/Runner\ 2021-02-04\ 14-27-30/example.ipa`, the registration command is:
+
+```text
+approov registration -add ../../Runner\ 2021-02-04\ 14-27-30/example.ipa --expireAfter 1h
+```
+
 > **IMPORTANT:** During development always use the `--expireAfter` flag with an expiration that best suits your needs, using `h` for hours and `d` for days. By default, an app registration is permanent and will remain in the Approov cloud database until it is explicitly removed. Permanent app registrations should be used to identify apps that are being published to production.
 
 Finally, you can now use the Echo Chamber mobile app and play with it, but you need to restart it in order for the mobile app to get a valid Approov token, because in the first launch it was not yet registered with the Approov cloud service.
 
 > **NOTE:** To not have to restart the mobile app you can try to build the mobile app, then register it with Approov and then launch it, but this often leads to a failure in Approov not recognizing the mobile app as registered, because the way Flutter works it seems that in development it always build the mobile app when you hit the run button, even when no code changes had taken place, thus resulting in a different binary(maybe a timestamp is added in the build process), therefore not the same you had registered previously. This is also true for when using the `flutter` cli.
 
-For a **production release** be rest assured that you don't need to launch the mobile app, just build it and register it. Please read our docs at [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) for more details in how to proceed.
+For a **production release** rest assured that you don't need to launch the mobile app, just build it and register it. Please read our docs at [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) for more details in how to proceed.
 
 
 #### Development Work-flow
