@@ -1,9 +1,12 @@
+// @dart=2.9
+
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class HttpService {
 
   static String httpProtocol = "https";
+
   static String websocketProtocol = "wss";
 
   static String auth_token;

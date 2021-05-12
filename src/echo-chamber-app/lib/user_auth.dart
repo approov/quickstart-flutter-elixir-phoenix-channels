@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:convert';
 import 'package:echo/http_service.dart';
 import 'package:http/http.dart';
@@ -15,7 +17,7 @@ class UserAuth {
 
     Response response = await http
         .post(
-      "${HttpService.apiBaseUrl}/auth/login",
+      Uri.parse("${HttpService.apiBaseUrl}/auth/login"),
       headers: {
         "content-type": "application/json",
       },
@@ -43,7 +45,7 @@ class UserAuth {
 
     Response response = await http
         .post(
-      "${HttpService.apiBaseUrl}/auth/register",
+      Uri.parse("${HttpService.apiBaseUrl}/auth/register"),
       headers: {
         "content-type": "application/json",
       },
