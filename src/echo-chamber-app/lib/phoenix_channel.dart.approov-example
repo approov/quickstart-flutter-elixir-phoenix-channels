@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:echo/http_service.dart';
 import 'package:phoenix_wings/phoenix_wings.dart';
 import 'package:echo/user_auth.dart';
