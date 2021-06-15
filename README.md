@@ -76,7 +76,7 @@ approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/android/a
 Instead, if you want to build for iOS execute from the root of your project:
 
 ```text
-approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/ios/approov.xcframework
+approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/ios/Approov.xcframework
 ```
 > **NOTE:** The approov command is downloading the Approov SDK into `your-project/approov/flutter-httpclient/approov_http_client/ios`
 

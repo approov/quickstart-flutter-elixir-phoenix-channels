@@ -56,7 +56,7 @@ approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/android/a
 Instead, if you want to build for iOS execute from `src/echo-chamber-app` folder:
 
 ```text
-approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/ios/approov.xcframework
+approov sdk -getLibrary approov/flutter-httpclient/approov_http_client/ios/Approov.xcframework
 ```
 > **NOTE:** The approov command is downloading the Approov SDK into the folder `src/echo-chamber-app/approov/flutter-httpclient/approov_http_client/ios`
 
