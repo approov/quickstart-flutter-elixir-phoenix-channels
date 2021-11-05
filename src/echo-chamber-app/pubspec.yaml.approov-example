@@ -9,9 +9,13 @@ dependencies:
     sdk: flutter
   http: ^0.13.3
   phoenix_wings:
+    git:  https://github.com/approov/approov-flutter-packages.git
     path: ./approov/phoenix_wings
-  approov_http_client:
-    path: ./approov/flutter-httpclient/approov_http_client
+  approov_service_flutter_httpclient:
+     git: https://github.com/approov/approov_service_flutter_httpclient.git
+     path: ./approov/approov_service_flutter_httpclient
+  #approov_http_client:
+    #path: ./approov/flutter-httpclient/approov_http_client
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

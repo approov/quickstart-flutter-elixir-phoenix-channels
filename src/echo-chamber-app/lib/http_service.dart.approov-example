@@ -1,7 +1,7 @@
 // @dart=2.9
 
 import 'dart:io';
-import 'package:approov_http_client/approov_http_client.dart';
+import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 
 class HttpService {
 
@@ -34,9 +34,8 @@ class HttpService {
   }
 
   static final httpClient = () {
-    final approovClient = ApproovClient();
-    approovClient.approovHeader = ApproovService.X_APPROOV_HEADER;
-
+    final approovClient = ApproovClient('<enter-your-config-string-here>');
+    approovClient.approovHeader = 'X-Approov-Token';
     // @TODO Cannot be set here until the appoovsdkflutter is changed to not
     //       throw when the token binding header is missing.
     // ApproovService.setBindingHeader('Authorization');
