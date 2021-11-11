@@ -14,43 +14,31 @@ class PhoenixChannelSocket {
   static connect() async {
     _authToken = await _getAuthenticationToken();
 
-    final socket_options = new PhoenixSocketOptions(
-      params: {
-        "Authorization": _authToken,
-        "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-      }
-    );
+    final socket_options = new PhoenixSocketOptions(params: {
+      "Authorization": _authToken,
+      "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
+    });
 
     // To run from the Android the emulator we need to use `10.0.2.2`, because
     // if we use `localhost` we just hit the emulator VM, not our computer
     // `localhost`.
-    _socket = PhoenixSocket(
-      "${HttpService.websocketUrl}/socket/websocket",
-      socketOptions: socket_options
-    );
+    _socket = PhoenixSocket("${HttpService.websocketUrl}/socket/websocket",
+        '<enter your config string here>',
+        socketOptions: socket_options);
 
     await _socket.connect();
   }
 
-  static join (
-    String channelName,
-    {
-      onMessage,
-      onError
-    }
-  ) async {
-
+  static join(String channelName, {onMessage, onError}) async {
     // Only join if not already joined.
-    if(_channels != null && _channels[channelName] != null) {
+    if (_channels != null && _channels[channelName] != null) {
       return;
     }
 
-    final PhoenixChannel _channel = _socket.channel(
-      channelName,
-      {
-        "Authorization": _authToken,
-        "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-      });
+    final PhoenixChannel _channel = _socket.channel(channelName, {
+      "Authorization": _authToken,
+      "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
+    });
 
     // Setup listeners for channel events
     _channel.on(channelName, onMessage);
@@ -63,19 +51,17 @@ class PhoenixChannelSocket {
   }
 
   static push(String message, String channelName) async {
-    if(_channels == null || _channels[channelName] == null) {
+    if (_channels == null || _channels[channelName] == null) {
       print("Missing channel for: ${channelName}");
       return;
     }
 
-    _channels[channelName].push(
-        event: "echo_it",
-        payload: {
-          "message": message,
-          "Authorization": _authToken,
-          "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken, token_type: message)
-        }
-    );
+    _channels[channelName].push(event: "echo_it", payload: {
+      "message": message,
+      "Authorization": _authToken,
+      "X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken,
+          token_type: message)
+    });
   }
 
   static _getAuthenticationToken() async {
@@ -83,6 +69,8 @@ class PhoenixChannelSocket {
     await UserAuth().register("me@gmail.com", "very_strong_password");
 
     // @TODO Add Authentication login screen
-    return await UserAuth().login("me@gmail.com", "very_strong_password").then((value) => value);
+    return await UserAuth()
+        .login("me@gmail.com", "very_strong_password")
+        .then((value) => value);
   }
 }
