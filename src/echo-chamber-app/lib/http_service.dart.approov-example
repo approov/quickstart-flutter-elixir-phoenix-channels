@@ -1,10 +1,9 @@
 // @dart=2.9
 
 import 'dart:io';
-import 'package:approov_http_client/approov_http_client.dart';
+import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 
 class HttpService {
-
   static String httpProtocol = "https";
 
   static String websocketProtocol = "wss";
@@ -34,28 +33,30 @@ class HttpService {
   }
 
   static final httpClient = () {
-    final approovClient = ApproovClient();
-    approovClient.approovHeader = ApproovService.X_APPROOV_HEADER;
-
+    final approovClient =
+        ApproovClient('<enter your config string here>');
+    // We use a custom header instead of default one Approov-Token
+    approovClient.setApproovHeader('X-Approov-Token', '');
     // @TODO Cannot be set here until the appoovsdkflutter is changed to not
     //       throw when the token binding header is missing.
     // ApproovService.setBindingHeader('Authorization');
 
     return approovClient;
-  } ();
+  }();
 
   static String get websocketUrl {
     return "${websocketProtocol}://${apiHost}";
   }
 
   static fetchApproovToken({token_type = ""}) async {
-    switch(token_type) {
+    switch (token_type) {
       // For demo purpose only
       case "token:invalid":
         return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjQ3MDg3ODMyMDV9.cG01T9zBv_NzcNdIHU3lWXKNsWoAktOJ9Xt6mA8uTFs";
 
       default:
-        String token = await ApproovService.fetchApproovToken(apiHost).then((value) => value.token);
+        String token = await ApproovService.fetchApproovToken(apiHost)
+            .then((value) => value.token);
         return token;
     }
   }
