@@ -12,10 +12,6 @@ dependencies:
     git:
       url: https://github.com/approov/approov-flutter-packages.git
       path: phoenix_wings
-  absinthe_socket:
-    git:
-      url: https://github.com/approov/approov-flutter-packages.git
-      path: absinthe_socket
   approov_web_socket:
     git:
       url: https://github.com/approov/approov-flutter-packages.git
@@ -47,8 +43,8 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
-  assets:
-    - approov-initial.config
+  #assets:
+    #- approov-initial.config
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
