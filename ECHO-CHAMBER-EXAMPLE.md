@@ -149,7 +149,7 @@ Finally, you can now use the Echo Chamber mobile app and play with it, but you n
 For a **production release** rest assured that you don't need to launch the mobile app, just build it and register it. Please read our docs at [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) for more details in how to proceed.
 
 
-#### Development Work-flow
+#### Development Workflow
 
 The registration step is required for each time you change your code, even if you are just commenting out a line of code or fixing a typo in a variable.
 
@@ -158,7 +158,7 @@ The Flutter hot reload functionality doesn't write to the disk any changes made 
 For example:
 
 ```Bash
-approov device -add h4gubfCFzJu81j/U2BJsdg== -policy default,whitelist,all
+approov device -add h4gubfCFzJu81j/U2BJsdg== -policy default,always-pass,all
 ```
 
 The value `h4gubfCFzJu81j/U2BJsdg==` is the device id, and you can read on our docs the section [Extracting the Device ID](https://approov.io/docs/latest/approov-usage-documentation/#extracting-the-device-id) for more details how you can do it.
