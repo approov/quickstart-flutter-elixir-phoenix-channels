@@ -42,12 +42,12 @@ The `approov_service_flutter_httpclient` adds an additional repository to the `b
 maven { url 'https://jitpack.io' }
 ```
 
-and two implementation dependecies:
+and two implementation dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.squareup.okhttp3:okhttp:3.14.2'
-    implementation 'com.github.approov:approov-android-sdk:2.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.github.approov:approov-android-sdk:2.9.0'
 }
 ```
 
