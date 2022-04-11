@@ -3,6 +3,9 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+// UNCOMMENT TO USE APPROOV
+//import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
+
 class HttpService {
 
   static String httpProtocol = "https";
@@ -23,19 +26,38 @@ class HttpService {
   }
 
   // Choose one of the below endpoints:
+  // IF RUNNING PHOENIX CHANNELS SERVER LOCALLY
   // static String apiHost = localhost;
+  // IF USING THE UNPROTECTED PHOENIX CHANNELS SERVER BEFORE ADDING APPROOV
   static String apiHost = 'unprotected.phoenix-channels.demo.approov.io';
+  // IF USING THE PROTECTED PHOENIX CHANNELS SERVER WHEN USING APPROOV
+  //static String apiHost = 'token.phoenix-channels.demo.approov.io';
 
   static String get apiBaseUrl {
-    // We need to call apiHost first, otherwise we get https in localhost.
     String host = apiHost;
-
     return "${httpProtocol}://${host}";
   }
 
+  // COMMENT LINE BELOW IF USING APPROOV
   static final httpClient = new http.Client();
+
+  // UNCOMMENT LINES BELOW IF USING APPROOV
+  /*static final httpClient = () {
+    var approovClient = ApproovClient('<enter your config here>');
+    // We use a custom header "X-Approov-Token" rather than just "Approov-Token"
+    ApproovService.setApproovHeader("X-Approov-Token", "");
+    ApproovService.setBindingHeader('Authorization');
+    return approovClient;
+  }();*/
 
   static String get websocketUrl {
     return "${websocketProtocol}://${apiHost}";
   }
+
+  // UNCOMMENT IF USING APPROOV
+  /*static String fetchApproovTokenBinding(String data) {
+    ApproovService.setDataHashInToken(data);
+    // note this will return an empty string if the token cannot be obtained for any reason
+    return await ApproovService.fetchApproovToken(apiHost).then((value) => value.token);
+  }*/
 }

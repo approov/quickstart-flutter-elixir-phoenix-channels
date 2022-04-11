@@ -17,6 +17,8 @@ class PhoenixChannelSocket {
     final socket_options = new PhoenixSocketOptions(
       params: {
         "Authorization": _authToken,
+        // UNCOMMENT THE LINE BELOW IF USING APPROOV
+        //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
       }
     );
 
@@ -25,6 +27,8 @@ class PhoenixChannelSocket {
     // `localhost`.
     _socket = PhoenixSocket(
       "${HttpService.websocketUrl}/socket/websocket",
+      // UNCOMMENT IF USING APPROOV
+      //'<enter your config string here>',
       socketOptions: socket_options
     );
 
@@ -48,6 +52,8 @@ class PhoenixChannelSocket {
       channelName,
       {
         "Authorization": _authToken,
+        // UNCOMMENT THE LINE BELOW IF USING APPROOV
+        //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
       });
 
     // Setup listeners for channel events
@@ -71,6 +77,8 @@ class PhoenixChannelSocket {
         payload: {
           "message": message,
           "Authorization": _authToken,
+          // UNCOMMENT THE LINE BELOW IF USING APPROOV
+          //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
         }
     );
   }
