@@ -56,7 +56,8 @@ class HttpService {
 
   // UNCOMMENT IF USING APPROOV
   /*static Future<String> fetchApproovTokenBinding(String data) async {
-    ApproovService.setDataHashInToken(data);
+    if (data != null)
+      ApproovService.setDataHashInToken(data);
     // note this will return an empty string if the token cannot be obtained for any reason
     return ApproovService.fetchApproovToken(apiHost);
   }*/
