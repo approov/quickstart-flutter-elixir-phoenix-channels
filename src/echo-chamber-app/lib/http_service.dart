@@ -55,9 +55,9 @@ class HttpService {
   }
 
   // UNCOMMENT IF USING APPROOV
-  /*static String fetchApproovTokenBinding(String data) {
+  /*static Future<String> fetchApproovTokenBinding(String data) async {
     ApproovService.setDataHashInToken(data);
     // note this will return an empty string if the token cannot be obtained for any reason
-    return await ApproovService.fetchApproovToken(apiHost).then((value) => value.token);
+    return ApproovService.fetchApproovToken(apiHost);
   }*/
 }
