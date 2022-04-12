@@ -19,7 +19,7 @@ First, clone this repo:
 
 Next, open a shell on the directory `src/echo-chamber-app`. You can then use `flutter run` to build and run the app on a connected physical device.
 
-> NOTE: The mobile app will run against this live backend `https://unprotected.phoenix-channels.demo.approov.io`, and the code for it is in the [approov/quickstart-elixir-phoenix-channels-token-check](https://github.com/approov/quickstart-elixir-phoenix-channels-token-check/tree/master/src/unprotected-server/echo) Github repo at `src/unprotected-server/echo`.
+> NOTE: The mobile app will run against this live backend `https://unprotected.phoenix-channels.demo.approov.io`, and the code for it is in the [approov/quickstart-elixir-phoenix-channels-token-check](https://github.com/approov/quickstart-elixir-phoenix-channels-token-check/tree/main/src/unprotected-server/echo) Github repo at `src/unprotected-server/echo`.
 
 ### iOS Potential Issues
 
@@ -67,7 +67,7 @@ Edit the file `quickstart-flutter-elixir-phoenix-channels/src/echo-chamber-app/l
 
 ### ADDING THE PROTECTED API DOMAIN
 
-The app will run against [this backend](https://github.com/approov/quickstart-elixir-phoenix-channels-token-check/tree/master/src/approov-protected-server/token-check/echo), that is live at `token.phoenix-channels.demo.approov.io`, thus we also need to let the Approov cloud service know the API domain for it:
+The app will run against [this backend](https://github.com/approov/quickstart-elixir-phoenix-channels-token-check/tree/main/src/approov-protected-server/token-check/echo), that is live at `token.phoenix-channels.demo.approov.io`, thus we also need to let the Approov cloud service know the API domain for it:
 
 ```Bash
 approov api -add token.phoenix-channels.demo.approov.io
@@ -80,17 +80,15 @@ Adding the API domain also configures the [dynamic certificate pinning](https://
 
 > **NOTE:** By default, the pin is extracted from the public key of the leaf certificate served by the domain, as visible to the box executing the Approov CLI command and the Approov servers.
 
-If you want to run the mobile app against a backend you have control off, then you need to follow the [deployment guide](https://github.com/approov/quickstart-elixir-phoenix-channels-token-check/blob/master/DEPLOYMENT.md) for the backend of this Echo Chamber mobile app.
+If you want to run the mobile app against a backend you have control off, then you need to follow the [deployment guide](https://github.com/approov/quickstart-elixir-phoenix-channels-token-check/blob/main/DEPLOYMENT.md) for the backend of this Echo Chamber mobile app.
 
 ### APP REGISTRATION
 
 In order to use your mobile app with Approov you need to register the mobile app binary each time you build it. You can build and run the app from the `src/echo-chamber-app` directory using `flutter run`.
 
-First, launch the Echo Chamber mobile app by hitting the correspondent button in your IDE.
-
 > **IMPORTANT:** If you already have attempted to follow this guide, and have the Echo Chamber mobile app installed in your device, then you **MUST** uninstall it first, because Flutter seems to preserve state from previous attempts.
 
-Now, you can go ahead and register the resulting binary with the Approov CLI tool. For development execute from inside the `src/echo-chamber-app` folder:
+Now, you can go ahead and register the resulting app with the Approov CLI tool. For development execute from inside the `src/echo-chamber-app` folder:
 
 For Android:
 

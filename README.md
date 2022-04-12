@@ -29,12 +29,10 @@ Note that this creates a dependency on the latest version of the `approov-servic
 approov_service_flutter_httpclient:
   git:
     url: https://github.com/approov/approov-service-flutter-httpclient.git
-    ref: 3.0.1
+    ref: 3.0.2
 ```
 
 You will need to fork the `approov-flutter-packages` if you wish to fix their dependency to a specific tag.
-
-https://github.com/approov/approov-service-flutter-httpclient.git
 
 The `phoenix_wings` package uses a predefined header to forward the Approov Token and also forwards the Approov SDK initialization string to the `approov_web_socket` package. The `approov_web_socket` package interacts with the `approov_service_flutter_httpclient` by means of an `ApproovHttpClient` object.
 
