@@ -2,24 +2,16 @@
 
 import 'package:echo/http_service.dart';
 import 'package:phoenix_wings/phoenix_wings.dart';
-import 'package:echo/user_auth.dart';
 
 class PhoenixChannelSocket {
-  static String _authToken;
 
   static PhoenixSocket _socket;
 
   static Map<String, PhoenixChannel> _channels = {};
 
   static connect() async {
-    _authToken = await _getAuthenticationToken();
-
     final socket_options = new PhoenixSocketOptions(
-      params: {
-        "Authorization": _authToken,
-        // UNCOMMENT THE LINE BELOW IF USING APPROOV
-        //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-      }
+        params: await HttpService.buildRequestAttributesWithUserToken()
     );
 
     // To run from the Android the emulator we need to use `10.0.2.2`, because
@@ -43,18 +35,25 @@ class PhoenixChannelSocket {
     }
   ) async {
 
+    if (_socket == null) {
+      onError("Phoenix Channel: No network???");
+      return;
+    }
+
+    if (! _socket.isConnected) {
+      onError("Phoenix Channel: socket is not connected");
+      return;
+    }
+
     // Only join if not already joined.
     if(_channels != null && _channels[channelName] != null) {
       return;
     }
 
     final PhoenixChannel _channel = _socket.channel(
-      channelName,
-      {
-        "Authorization": _authToken,
-        // UNCOMMENT THE LINE BELOW IF USING APPROOV
-        //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-      });
+        channelName,
+        await HttpService.buildRequestAttributesWithUserToken()
+    );
 
     // Setup listeners for channel events
     _channel.on(channelName, onMessage);
@@ -72,22 +71,12 @@ class PhoenixChannelSocket {
       return;
     }
 
+    Map payload = await HttpService.buildRequestAttributesWithUserToken();
+    payload["message"] = message;
+
     _channels[channelName].push(
         event: "echo_it",
-        payload: {
-          "message": message,
-          "Authorization": _authToken,
-          // UNCOMMENT THE LINE BELOW IF USING APPROOV
-          //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-        }
+        payload: payload
     );
-  }
-
-  static _getAuthenticationToken() async {
-    // @TODO Add Authentication register screen
-    await UserAuth().register("me@gmail.com", "very_strong_password");
-
-    // @TODO Add Authentication login screen
-    return await UserAuth().login("me@gmail.com", "very_strong_password").then((value) => value);
   }
 }

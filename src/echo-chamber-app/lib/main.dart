@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:echo/phoenix_channel.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 void main() {
@@ -40,11 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  _error() {
-    setState(() {
-      // @TODO Show toaster message with the error.
-      messages.insert(0, ChatMessage(text: "ERRROR"));
-    });
+  _error(err) {
+    Fluttertoast.showToast(
+        msg: err.toString(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
   }
 
   _say(payload, _ref, _joinRef) {

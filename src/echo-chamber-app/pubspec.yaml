@@ -8,6 +8,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.3
+  fluttertoast: ^8.0.9
 
   # COMMENT OUT IF APPROOV IS BEING USED
   phoenix_wings: ^0.2.1
