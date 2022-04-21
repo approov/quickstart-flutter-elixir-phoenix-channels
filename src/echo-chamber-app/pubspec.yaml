@@ -9,9 +9,10 @@ dependencies:
     sdk: flutter
   http: ^0.13.3
   fluttertoast: ^8.0.9
+  flutter_easyloading: ^2.0.0
 
   # COMMENT OUT IF APPROOV IS BEING USED
-  phoenix_wings: ^0.2.1
+  phoenix_wings: ^1.0.2
 
   # UNCOMMENT THE FOLLOWING LINES IF APPROOV IS BEING USED
   #phoenix_wings:

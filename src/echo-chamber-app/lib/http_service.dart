@@ -29,8 +29,10 @@ class HttpService {
   // Choose one of the below endpoints:
   // IF RUNNING PHOENIX CHANNELS SERVER LOCALLY
   // static String apiHost = localhost;
+
   // IF USING THE UNPROTECTED PHOENIX CHANNELS SERVER BEFORE ADDING APPROOV
   static String apiHost = 'unprotected.phoenix-channels.demo.approov.io';
+
   // IF USING THE PROTECTED PHOENIX CHANNELS SERVER WHEN USING APPROOV
   //static String apiHost = 'token.phoenix-channels.demo.approov.io';
 
@@ -65,10 +67,10 @@ class HttpService {
 
   static Future<Map<String, String>> buildRequestAttributes() async {
     return {
-      // UNCOMMENT THE LINE BELOW IF RUNNING PHOENIX CHANNELS SERVER LOCALLY
+      // UNCOMMENT THE LINE BELOW IF USING APPROOV WITH THE LOCALHOST BACKEND SERVER
       // "X-Approov-Token": _getTokenForLocalhostTesting(type: "valid"),
 
-      // UNCOMMENT THE LINE BELOW IF USING APPROOV
+      // UNCOMMENT THE LINE BELOW IF USING APPROOV WITH THE ONLINE BACKEND SERVER
       //"X-Approov-Token": await fetchApproovTokenBinding(_authToken)
     };
   }

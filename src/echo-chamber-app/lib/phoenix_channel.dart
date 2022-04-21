@@ -9,9 +9,12 @@ class PhoenixChannelSocket {
 
   static Map<String, PhoenixChannel> _channels = {};
 
-  static connect() async {
+  static connect({onOpen, onError}) async {
     final socket_options = new PhoenixSocketOptions(
-        params: await HttpService.buildRequestAttributesWithUserToken()
+        params: await HttpService.buildRequestAttributesWithUserToken(),
+        timeout: 2000,
+        heartbeatIntervalMs: 3000,
+        reconnectAfterMs: const [500, 1000, 1500, 3000]
     );
 
     // To run from the Android the emulator we need to use `10.0.2.2`, because
@@ -24,30 +27,33 @@ class PhoenixChannelSocket {
       socketOptions: socket_options
     );
 
-    await _socket.connect();
+    _socket.onOpen(onOpen);
+    _socket.onError(onError);
+    _socket.connect();
   }
 
-  static join (
+  static Future<bool> join (
     String channelName,
     {
       onMessage,
       onError
     }
   ) async {
-
-    if (_socket == null) {
-      onError("Phoenix Channel: No network???");
-      return;
+    // This check needs to be the first, to be able to resume after app looses
+    // network and reestablishes the socket connection.
+    if (_socket != null && ! _socket.isConnected) {
+      print("Phoenix Channel: Trying to reconnect to the socket. Poor Network??? Invalid or missing Approov token???");
+      return false;
     }
 
-    if (! _socket.isConnected) {
-      onError("Phoenix Channel: socket is not connected");
-      return;
+    if (_socket == null) {
+      print("Phoenix Channel: No socket connection. No network??? Invalid or missing Approov token???");
+      return false;
     }
 
     // Only join if not already joined.
     if(_channels != null && _channels[channelName] != null) {
-      return;
+      return true;
     }
 
     final PhoenixChannel _channel = _socket.channel(
@@ -63,12 +69,14 @@ class PhoenixChannelSocket {
     _channel.join();
 
     _channels[channelName] = _channel;
+
+    return true;
   }
 
-  static push(String message, String channelName) async {
+  static Future<bool> push(String message, String channelName) async {
     if(_channels == null || _channels[channelName] == null) {
-      print("Missing channel for: ${channelName}");
-      return;
+      print("Phoenix Channel: Unknown channel ${channelName}");
+      return false;
     }
 
     Map payload = await HttpService.buildRequestAttributesWithUserToken();
@@ -78,5 +86,7 @@ class PhoenixChannelSocket {
         event: "echo_it",
         payload: payload
     );
+
+    return true;
   }
 }
