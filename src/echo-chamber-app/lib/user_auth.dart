@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:echo/http_service.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class UserAuth {
@@ -15,12 +16,13 @@ class UserAuth {
       "password": password,
     };
 
+    Map headers = await HttpService.buildRequestAttributes();
+    headers["content-type"] = "application/json";
+
     Response response = await http
         .post(
       Uri.parse("${HttpService.apiBaseUrl}/auth/login"),
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: headers,
       body: jsonEncode(credentials),
     ).catchError((onError) {
       print(onError);
@@ -43,14 +45,16 @@ class UserAuth {
       "password": password,
     };
 
+    Map headers = await HttpService.buildRequestAttributes();
+    headers["content-type"] = "application/json";
+
     Response response = await http
         .post(
       Uri.parse("${HttpService.apiBaseUrl}/auth/register"),
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: headers,
       body: jsonEncode(credentials),
     ).catchError((onError) {
+      print(onError);
       return null;
     });
 

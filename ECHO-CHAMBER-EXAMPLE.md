@@ -57,13 +57,14 @@ If the Android build fails with `Manifest merger failed : Attribute application@
 
 ## ADDING APPROOV SUPPORT
 
-Approov protection is provided through the `approov_service_flutter_httpclient` plugin for both, Android and iOS mobile platforms. This plugin handles all Approov related functionality, including the fetching of Approov tokens, adding these to API requests as necessary, and managing certificate public key pinning.
+Approov protection is provided through the `approov_service_flutter_httpclient` plugin for both, Android and iOS mobile platforms. This plugin handles all Approov related functionality, including the fetching of Approov tokens and adding these to the `Approov-Token` header for each API request. It also provides you with [dynamic certificate pinning](https://approov.io/docs/latest/approov-usage-documentation/#approov-dynamic-pinning) out of the box, without the need for you to code anything.
 
-Look at the `quickstart-flutter-elixir-phoenix-channels/src/echo-chamber-app/pubspec.yaml` and find the lines that are commented that they need to be changed for Approov integration. The `Phoenix Channels` support is located in the [approov-flutter-packages](https://github.com/approov/approov-flutter-packages.git) repository and is installed by the changes. This also includes the `approov-service-flutter-httpclient` package.
+To enable Approov you only need to comment or comment out some lines of code that are after `// COMMENT LINE BELOW IF USING APPROOV` or `// UNCOMMENT LINES BELOW IF USING APPROOV`.
+
+Look at the `quickstart-flutter-elixir-phoenix-channels/src/echo-chamber-app/pubspec.yaml` and find the lines that need to be changed for the Approov integration. The `Phoenix Channels` support is located in the [approov-flutter-packages](https://github.com/approov/approov-flutter-packages.git) repository and is installed by the changes. This also includes the `approov-service-flutter-httpclient` package.
 
 Edit the file `quickstart-flutter-elixir-phoenix-channels/src/echo-chamber-app/lib/http_service.dart` by finding the lines that need to be changed when using Approov. Uncomment the appropriate lines and add the config line. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email.
 
-Edit the file `quickstart-flutter-elixir-phoenix-channels/src/echo-chamber-app/lib/phoenix_channel.dart` by finding the lines that need to be changed when using Approov. This also requires a change for `<enter-your-config-string-here>`, replacing it with the custom string that configures your Approov account access.
 
 ### ADDING THE PROTECTED API DOMAIN
 

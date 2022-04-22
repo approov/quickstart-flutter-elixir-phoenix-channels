@@ -2,24 +2,19 @@
 
 import 'package:echo/http_service.dart';
 import 'package:phoenix_wings/phoenix_wings.dart';
-import 'package:echo/user_auth.dart';
 
 class PhoenixChannelSocket {
-  static String _authToken;
 
   static PhoenixSocket _socket;
 
   static Map<String, PhoenixChannel> _channels = {};
 
-  static connect() async {
-    _authToken = await _getAuthenticationToken();
-
+  static connect({onOpen, onError}) async {
     final socket_options = new PhoenixSocketOptions(
-      params: {
-        "Authorization": _authToken,
-        // UNCOMMENT THE LINE BELOW IF USING APPROOV
-        //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-      }
+        params: await HttpService.buildRequestAttributesWithUserToken(),
+        timeout: 2000,
+        heartbeatIntervalMs: 3000,
+        reconnectAfterMs: const [500, 1000, 1500, 3000]
     );
 
     // To run from the Android the emulator we need to use `10.0.2.2`, because
@@ -32,29 +27,39 @@ class PhoenixChannelSocket {
       socketOptions: socket_options
     );
 
-    await _socket.connect();
+    _socket.onOpen(onOpen);
+    _socket.onError(onError);
+    _socket.connect();
   }
 
-  static join (
+  static Future<bool> join (
     String channelName,
     {
       onMessage,
       onError
     }
   ) async {
+    // This check needs to be the first, to be able to resume after app looses
+    // network and reestablishes the socket connection.
+    if (_socket != null && ! _socket.isConnected) {
+      print("Phoenix Channel: Trying to reconnect to the socket. Poor Network??? Invalid or missing Approov token???");
+      return false;
+    }
+
+    if (_socket == null) {
+      print("Phoenix Channel: No socket connection. No network??? Invalid or missing Approov token???");
+      return false;
+    }
 
     // Only join if not already joined.
     if(_channels != null && _channels[channelName] != null) {
-      return;
+      return true;
     }
 
     final PhoenixChannel _channel = _socket.channel(
-      channelName,
-      {
-        "Authorization": _authToken,
-        // UNCOMMENT THE LINE BELOW IF USING APPROOV
-        //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-      });
+        channelName,
+        await HttpService.buildRequestAttributesWithUserToken()
+    );
 
     // Setup listeners for channel events
     _channel.on(channelName, onMessage);
@@ -64,30 +69,24 @@ class PhoenixChannelSocket {
     _channel.join();
 
     _channels[channelName] = _channel;
+
+    return true;
   }
 
-  static push(String message, String channelName) async {
+  static Future<bool> push(String message, String channelName) async {
     if(_channels == null || _channels[channelName] == null) {
-      print("Missing channel for: ${channelName}");
-      return;
+      print("Phoenix Channel: Unknown channel ${channelName}");
+      return false;
     }
+
+    Map payload = await HttpService.buildRequestAttributesWithUserToken();
+    payload["message"] = message;
 
     _channels[channelName].push(
         event: "echo_it",
-        payload: {
-          "message": message,
-          "Authorization": _authToken,
-          // UNCOMMENT THE LINE BELOW IF USING APPROOV
-          //"X-Approov-Token": await HttpService.fetchApproovTokenBinding(_authToken)
-        }
+        payload: payload
     );
-  }
 
-  static _getAuthenticationToken() async {
-    // @TODO Add Authentication register screen
-    await UserAuth().register("me@gmail.com", "very_strong_password");
-
-    // @TODO Add Authentication login screen
-    return await UserAuth().login("me@gmail.com", "very_strong_password").then((value) => value);
+    return true;
   }
 }

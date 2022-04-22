@@ -68,9 +68,9 @@ pod install
 
 in the directory containing the ios project files.
 
-## USING APPROOV WITH PHEONIX CHANNELS
+## USING APPROOV WITH PHOENIX CHANNELS
 
-You need to instantiate the `PhoenixSocket` with an additional parameter and use it to `connect()`:
+First, you need to instantiate the `PhoenixSocket` with an additional parameter and use it to `connect()`:
 
 ```Dart
 PhoenixSocket socket = PhoenixSocket("${HttpService.websocketUrl}/socket/websocket",
@@ -80,17 +80,40 @@ PhoenixSocket socket = PhoenixSocket("${HttpService.websocketUrl}/socket/websock
 
 The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email.
 
+Now, you need to add the Approov token when you join to the Phoenix channel:
+
+```dart
+import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
+
+Map urlParams = {
+  "X-Approov-Token": await fetchApproovTokenBinding(_authToken)
+};
+
+final PhoenixChannel _channel = _socket.channel(channelName, urlParams);
+```
+
+Next, add the Approov token to the payload of each message sent to the Phoenix channel:
+
+```dart
+import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
+
+Map payload = {
+  "X-Approov-Token": await fetchApproovTokenBinding(_authToken),
+  "message" : message
+};
+
+_channel.push(event: "name", payload: payload);
+```
+
+It's important that you also use the Approov token when joining to the channel and when sending messages to it, because your app environment can be compromised at any moment by an attacker, and when this occurs an invalid Approov token is sent in the API request headers to allow for your backend to reject any message it receives and to not send any data back as it would normally do.
+
+
 ## CHECKING IT WORKS
 
 Initially you won't have set which API domains to protect, so the interceptor will not add anything. It will have called Approov though and made contact with the Approov cloud service. You will see logging from Approov saying `UNKNOWN_URL`.
 
 Your Approov onboarding email should contain a link allowing you to access [Live Metrics Graphs](https://approov.io/docs/latest/approov-usage-documentation/#metrics-graphs). After you've run your app with Approov integration you should be able to see the results in the live metrics within a minute or so. At this stage you could even release your app to get details of your app population and the attributes of the devices they are running upon.
 
-## CHECKING IT WORKS
-
-Initially you won't have set which API domains to protect, so the interceptor will not add anything. It will have called Approov though and made contact with the Approov cloud service. You will see logging from Approov saying `UNKNOWN_URL`.
-
-Your Approov onboarding email should contain a link allowing you to access [Live Metrics Graphs](https://approov.io/docs/latest/approov-usage-documentation/#metrics-graphs). After you've run your app with Approov integration you should be able to see the results in the live metrics within a minute or so. At this stage you could even release your app to get details of your app population and the attributes of the devices they are running upon.
 
 ## NEXT STEPS
 To actually protect your APIs there are some further steps. Approov provides two different options for protecting APIs:
