@@ -58,7 +58,7 @@ class HttpService {
     if (data != null)
       ApproovService.setDataHashInToken(data);
     // note this will return an empty string if the token cannot be obtained for any reason
-    return ApproovService.fetchApproovToken(apiHost);
+    return ApproovService.fetchToken(apiHost);
   }*/
 
   static String get websocketUrl {

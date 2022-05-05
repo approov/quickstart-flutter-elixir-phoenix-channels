@@ -29,7 +29,7 @@ Note that this creates a dependency on the latest version of the `approov-servic
 approov_service_flutter_httpclient:
   git:
     url: https://github.com/approov/approov-service-flutter-httpclient.git
-    ref: 3.0.3
+    ref: 3.0.5
 ```
 
 You will need to fork the `approov-flutter-packages` if you wish to fix their dependency to a specific tag.
@@ -123,3 +123,5 @@ To actually protect your APIs there are some further steps. Approov provides two
 * [SECRET PROTECTION](https://github.com/approov/quickstart-flutter-httpclient/blob/master/SECRET-PROTECTION.md): If you do not control the backend API(s) being protected, and are therefore unable to modify it to check Approov tokens, you can use this approach instead. It allows app secrets, and API keys, to be protected so that they no longer need to be included in the built code and are only made available to passing apps at runtime.
 
 Note that it is possible to use both approaches side-by-side in the same app, in case your app uses a mixture of 1st and 3rd party APIs.
+
+See [REFERENCE](https://github.com/approov/quickstart-flutter-httpclient/blob/master/REFERENCE.md) for a complete list of all of the `ApproovService` methods.
