@@ -4,7 +4,7 @@
 
 This is an Approov integration quickstart example for a mobile app built with Flutter and using a backend with [Elixir Phoenix Channels](https://hexdocs.pm/phoenix/channels.html). If you are looking for another mobile app integration you can check our list of [quickstarts](https://approov.io/docs/latest/approov-integration-examples/mobile-app/), and if you don't find what you are looking for, then please let us know [here](https://approov.io/contact). This quickstart provides the basic steps for integrating Approov into your app. A more detailed step-by-step guide using a [Echo Chamber App](https://github.com/approov/quickstart-flutter-elixir-phoenix-channels/blob/master/ECHO-CHAMBER-EXAMPLE.md) is also available.
 
-Thie [Flutter](https://flutter.dev) package requires version 2.12.0 with Dart 2.17.0. At the time of writing (11th April 2022) this is only accessible via the Flutter `beta` channel, not the `stable` channel. This is necessary because of the need to execute channel handlers on [background threads](https://docs.flutter.dev/development/platform-integration/platform-channels?tab=ios-channel-objective-c-tab#executing-channel-handlers-on-background-threads), which is only a recently added capability.
+This package requires Flutter 3 because of the need to execute channel handlers on [background threads](https://docs.flutter.dev/development/platform-integration/platform-channels?tab=ios-channel-objective-c-tab#executing-channel-handlers-on-background-threads), which is only available in the stable channel from Flutter 3.
 
 ## ADDING APPROOV ENABLED ELIXIR PHOENIX CHANNELS
 

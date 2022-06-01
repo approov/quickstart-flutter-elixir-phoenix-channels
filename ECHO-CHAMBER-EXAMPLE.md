@@ -8,7 +8,7 @@ A super simple echo chamber mobile app example written in in [`Flutter`](https:/
 * [Android Studio](https://developer.android.com/studio) installed (version Bumblebee 2021.1 is used in this guide) if you will build the Android app
 * [Xcode](https://developer.apple.com/xcode/) installed (version 13.3 is used in this guide) to build iOS version of application
 * [Cocoapods](https://cocoapods.org) installed to support iOS building (1.11.3 used in this guide)
-* [Flutter](https://flutter.dev) version 2.12.0 used in this guide with Dart 2.17.0
+* [Flutter](https://flutter.dev) stable version 3.0.1 is used in this guide. Note that integration is not possible with stable versions earlier than Flutter 3.
 * The contents of this repo
 
 ## Try The Echo Chamber App Without Approov
