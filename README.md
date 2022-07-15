@@ -6,6 +6,8 @@ This is an Approov integration quickstart example for a mobile app built with Fl
 
 This package requires Flutter 3 because of the need to execute channel handlers on [background threads](https://docs.flutter.dev/development/platform-integration/platform-channels?tab=ios-channel-objective-c-tab#executing-channel-handlers-on-background-threads), which is only available in the stable channel from Flutter 3.
 
+Note that the minimum OS requirement for iOS is 10 and for Android the minimum SDK version is 21 (Android 5.0). You cannot use Approov in apps that need to support OS versions older than this.
+
 ## ADDING APPROOV ENABLED ELIXIR PHOENIX CHANNELS
 
 The Approov Enabled Elixir Phoenix Channels is available via a [`Github`](https://github.com/approov/approov-flutter-packages.git) package. This allows inclusion into the project by simply specifying a dependency in the `pubspec.yaml` files for the app. In the `dependencies:` section of `pubspec.yaml` file add the following package reference:
@@ -107,13 +109,11 @@ _channel.push(event: "name", payload: payload);
 
 It's important that you also use the Approov token when joining to the channel and when sending messages to it, because your app environment can be compromised at any moment by an attacker, and when this occurs an invalid Approov token is sent in the API request headers to allow for your backend to reject any message it receives and to not send any data back as it would normally do.
 
-
 ## CHECKING IT WORKS
 
 Initially you won't have set which API domains to protect, so the interceptor will not add anything. It will have called Approov though and made contact with the Approov cloud service. You will see logging from Approov saying `UNKNOWN_URL`.
 
 Your Approov onboarding email should contain a link allowing you to access [Live Metrics Graphs](https://approov.io/docs/latest/approov-usage-documentation/#metrics-graphs). After you've run your app with Approov integration you should be able to see the results in the live metrics within a minute or so. At this stage you could even release your app to get details of your app population and the attributes of the devices they are running upon.
-
 
 ## NEXT STEPS
 To actually protect your APIs there are some further steps. Approov provides two different options for protection:
