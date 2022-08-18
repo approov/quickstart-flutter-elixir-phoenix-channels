@@ -31,7 +31,7 @@ Note that this creates a dependency on the latest version of the `approov-servic
 approov_service_flutter_httpclient:
   git:
     url: https://github.com/approov/approov-service-flutter-httpclient.git
-    ref: 3.0.5
+    ref: 3.0.6
 ```
 
 You will need to fork the `approov-flutter-packages` if you wish to fix their dependency to a specific tag.
