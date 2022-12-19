@@ -86,7 +86,7 @@ Now, you need to add the Approov token when you join to the Phoenix channel:
 import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 
 Map urlParams = {
-  "X-Approov-Token": await fetchApproovTokenBinding(_authToken)
+  "X-Approov-Token": await ApproovService.fetchToken('your.api.domain.com')
 };
 
 final PhoenixChannel _channel = _socket.channel(channelName, urlParams);
@@ -98,7 +98,7 @@ Next, add the Approov token to the payload of each message sent to the Phoenix c
 import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 
 Map payload = {
-  "X-Approov-Token": await fetchApproovTokenBinding(_authToken),
+  "X-Approov-Token": await ApproovService.fetchToken('your.api.domain.com'),
   "message" : message
 };
 

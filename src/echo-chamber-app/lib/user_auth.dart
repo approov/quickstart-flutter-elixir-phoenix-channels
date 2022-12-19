@@ -16,8 +16,9 @@ class UserAuth {
       "password": password,
     };
 
-    Map headers = await HttpService.buildRequestAttributes();
-    headers["content-type"] = "application/json";
+    Map<String, String> headers = {
+      "content-type": "application/json"
+    };
 
     Response response = await http
         .post(
@@ -45,8 +46,9 @@ class UserAuth {
       "password": password,
     };
 
-    Map headers = await HttpService.buildRequestAttributes();
-    headers["content-type"] = "application/json";
+    Map<String, String> headers = {
+      "content-type": "application/json"
+    };
 
     Response response = await http
         .post(
