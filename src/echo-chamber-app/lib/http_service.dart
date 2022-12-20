@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:echo/user_auth.dart';
 
 // UNCOMMENT TO USE APPROOV
-//import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
+// import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 
 class HttpService {
 
@@ -34,52 +34,37 @@ class HttpService {
   static String apiHost = 'unprotected.phoenix-channels.demo.approov.io';
 
   // IF USING THE PROTECTED PHOENIX CHANNELS SERVER WHEN USING APPROOV
-  //static String apiHost = 'token.phoenix-channels.demo.approov.io';
+  // static String apiHost = 'token.phoenix-channels.demo.approov.io';
 
   static String get apiBaseUrl {
-    String host = apiHost;
-    return "${httpProtocol}://${host}";
+    return "${httpProtocol}://${apiHost}";
+  }
+
+  static String get websocketUrl {
+    return "${websocketProtocol}://${apiHost}";
   }
 
   // COMMENT LINE BELOW IF USING APPROOV
   static final httpClient = new http.Client();
 
   // UNCOMMENT LINES BELOW IF USING APPROOV
-  /*static final httpClient = () {
-    var approovClient = ApproovClient('<enter your config here>');
-    // We use a custom header "X-Approov-Token" rather than just "Approov-Token"
-    ApproovService.setApproovHeader("X-Approov-Token", "");
-    ApproovService.setBindingHeader('Authorization');
-    return approovClient;
-  }();*/
+  // static final httpClient = () {
+  //   var approovClient = ApproovClient('<enter your config string here>');
+  //   // We use a custom header "X-Approov-Token" rather than just "Approov-Token"
+  //   ApproovService.setApproovHeader("X-Approov-Token", "");
+  //   return approovClient;
+  // }();
 
-  // UNCOMMENT IF USING APPROOV
-  /*static Future<String> fetchApproovTokenBinding(String data) async {
-    if (data != null)
-      ApproovService.setDataHashInToken(data);
-    // note this will return an empty string if the token cannot be obtained for any reason
-    return ApproovService.fetchToken(apiHost);
-  }*/
-
-  static String get websocketUrl {
-    return "${websocketProtocol}://${apiHost}";
-  }
-
-  static Future<Map<String, String>> buildRequestAttributes() async {
+  static Future<Map<String, String>> buildRequestHeaders() async {
     return {
+      "Authorization": await _getAuthenticationToken(),
+
       // UNCOMMENT THE LINE BELOW IF USING APPROOV WITH THE LOCALHOST BACKEND SERVER
       // "X-Approov-Token": _getTokenForLocalhostTesting(type: "valid"),
 
       // UNCOMMENT THE LINE BELOW IF USING APPROOV WITH THE ONLINE BACKEND SERVER
-      //"X-Approov-Token": await fetchApproovTokenBinding(_authToken)
+      // "X-Approov-Token": await ApproovService.fetchToken(apiHost),
     };
-  }
-
-  static Future<Map<String, String>> buildRequestAttributesWithUserToken() async {
-      var authToken = await _getAuthenticationToken();
-      var attrs = await buildRequestAttributes();
-      attrs["Authorization"] = authToken;
-      return attrs;
   }
 
   static Future<String> _getAuthenticationToken() async {
@@ -87,7 +72,9 @@ class HttpService {
       return auth_token;
     }
 
-    return await register_and_login();
+    auth_token = await register_and_login();
+
+    return auth_token;
   }
 
   static Future<String> register_and_login() async {

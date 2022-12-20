@@ -11,7 +11,7 @@ class PhoenixChannelSocket {
 
   static connect({onOpen, onError}) async {
     final socket_options = new PhoenixSocketOptions(
-        params: await HttpService.buildRequestAttributesWithUserToken(),
+        params: await HttpService.buildRequestHeaders(),
         timeout: 2000,
         heartbeatIntervalMs: 3000,
         reconnectAfterMs: const [500, 1000, 1500, 3000]
@@ -23,7 +23,7 @@ class PhoenixChannelSocket {
     _socket = PhoenixSocket(
       "${HttpService.websocketUrl}/socket/websocket",
       // UNCOMMENT IF USING APPROOV
-      //'<enter your config string here>',
+      // '<enter your config string here>',
       socketOptions: socket_options
     );
 
@@ -58,7 +58,7 @@ class PhoenixChannelSocket {
 
     final PhoenixChannel _channel = _socket.channel(
         channelName,
-        await HttpService.buildRequestAttributesWithUserToken()
+        await HttpService.buildRequestHeaders()
     );
 
     // Setup listeners for channel events
@@ -79,7 +79,7 @@ class PhoenixChannelSocket {
       return false;
     }
 
-    Map payload = await HttpService.buildRequestAttributesWithUserToken();
+    Map payload = await HttpService.buildRequestHeaders();
     payload["message"] = message;
 
     _channels[channelName].push(
