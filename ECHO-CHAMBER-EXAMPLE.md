@@ -124,7 +124,3 @@ If you are unable to use the app then this may be because the device you are usi
 * You can use a debugger or emulator/simulator and get valid Approov tokens on a specific device by ensuring you are [forcing a device ID to pass](https://approov.io/docs/latest/approov-usage-documentation/#forcing-a-device-id-to-pass). As a shortcut, you can use the `latest` as discussed so that the `device ID` doesn't need to be extracted from the logs or an Approov token.
 * Also, you can use a debugger or Android emulator and get valid Approov tokens on any device if you [mark the signing certificate as being for development](https://approov.io/docs/latest/approov-usage-documentation/#development-app-signing-certificates).
 * Approov token data is logged to the console using a secure mechanism - that is, a _loggable_ version of the token is logged, rather than the _actual_ token for debug purposes. This is covered [here](https://www.approov.io/docs/latest/approov-usage-documentation/#loggable-tokens).
-
-### DEVELOPMENT WORKFLOW
-
-For development purposes you might wish to use the [development app signing certificate](https://approov.io/docs/latest/approov-usage-documentation/#development-app-signing-certificates) feature. This allows a development build of your app to always get valid attestations, even when being used with a debugger.
