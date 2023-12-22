@@ -6,7 +6,7 @@ This is an Approov integration quickstart for Flutter and using a backend with [
 
 This package requires Flutter 3 because of the need to execute channel handlers on [background threads](https://docs.flutter.dev/development/platform-integration/platform-channels?tab=ios-channel-objective-c-tab#executing-channel-handlers-on-background-threads), which is only available in the stable channel from Flutter 3.
 
-Note that the minimum OS requirement for iOS is 10 and for Android the minimum SDK version is 21 (Android 5.0). You cannot use Approov in apps that need to support OS versions older than this.
+Note that the minimum OS requirement for iOS is 12 and for Android the minimum SDK version is 21 (Android 5.0). You cannot use Approov in apps that need to support OS versions older than this.
 
 ## ADDING APPROOV ENABLED ELIXIR PHOENIX CHANNELS
 
@@ -31,7 +31,7 @@ Note that this creates a dependency on the latest version of the `approov-servic
 approov_service_flutter_httpclient:
   git:
     url: https://github.com/approov/approov-service-flutter-httpclient.git
-    ref: 3.0.7
+    ref: 3.2.0
 ```
 
 You will need to fork the `approov-flutter-packages` if you wish to fix their dependency to a specific tag.
