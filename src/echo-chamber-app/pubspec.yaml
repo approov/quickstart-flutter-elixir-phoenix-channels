@@ -1,15 +1,15 @@
 name: echo
-description: A new Flutter project.
+description: Demo example for Approov and Phoenix Channels
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.3
+  http: ^1.2.1
   fluttertoast: ^8.0.9
-  flutter_easyloading: ^2.0.0
+  flutter_easyloading: ^3.0.0
 
   # COMMENT OUT IF APPROOV IS BEING USED
   phoenix_wings: ^1.0.2
@@ -23,7 +23,6 @@ dependencies:
   #  git:
   #    url: https://github.com/approov/approov-flutter-packages.git
   #    path: approov_web_socket
-  #approov_service_flutter_httpclient:
   #  git: https://github.com/approov/approov-service-flutter-httpclient.git
 
   # The following adds the Cupertino Icons font to your application.

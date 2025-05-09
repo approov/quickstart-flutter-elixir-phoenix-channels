@@ -1,4 +1,19 @@
-// @dart=2.9
+/*
+ * Copyright (c) 2025 Approov Ltd.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 import 'package:flutter/material.dart';
 import 'package:echo/phoenix_channel.dart';
@@ -15,17 +30,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Echo Chamber'),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: MyHomePage('Echo Chamber'),
       builder: EasyLoading.init(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  //MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage(this.title) : super();
   final String title;
 
   @override
@@ -63,13 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
     _disableSubmitButton();
 
     Fluttertoast.showToast(
-        msg: err.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 10,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
+      msg: err.toString(),
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 10,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
   }
 
@@ -92,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _say(payload, _ref, _joinRef) {
     setState(() {
-      messages.insert(0, ChatMessage(text: payload["message"]));
+      messages.insert(0, ChatMessage(payload["message"]));
     });
   }
 
@@ -101,25 +115,18 @@ class _MyHomePageState extends State<MyHomePage> {
     _disableSubmitButton();
 
     // Will join only if not already joined.
-    bool isJoined = await PhoenixChannelSocket.join(
-        _channelName,
-        onMessage: this._say,
-        onError: this._onChannelError,
-    );
+    bool isJoined = await PhoenixChannelSocket.join(_channelName, onMessage: this._say, onError: this._onChannelError);
 
-    if (! isJoined) {
+    if (!isJoined) {
       EasyLoading.dismiss();
       _showToastError("Failed to join the channel");
       EasyLoading.show(status: "Reconnecting...");
       return;
     }
 
-    bool isMessagePushed = await PhoenixChannelSocket.push(
-        message,
-        _channelName
-    );
+    bool isMessagePushed = await PhoenixChannelSocket.push(message, _channelName);
 
-    if (! isMessagePushed) {
+    if (!isMessagePushed) {
       EasyLoading.dismiss();
       _showToastError("Failed to push message to the channel");
       EasyLoading.show(status: "Reconnecting...");
@@ -135,9 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: Column(
         children: <Widget>[
           Flexible(
@@ -146,27 +151,24 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (BuildContext context, int index) {
                 final message = messages[index];
                 return Card(
-                    child: Column(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.message),
-                        title: Text(message.text),
-                        subtitle: Text(message.time)),
-                  ],
-                ));
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(leading: Icon(Icons.message), title: Text(message.text), subtitle: Text(message.time)),
+                    ],
+                  ),
+                );
               },
               itemCount: messages.length,
             ),
           ),
-          Divider(
-            height: 1.0,
-          ),
+          Divider(height: 1.0),
           Container(
             child: MessageComposer(
               textController: _textController,
               sendMessage: _sendMessage,
               isButtonEnabled: _isButtonEnabled,
-          ))
+            ),
+          ),
         ],
       ),
     );
@@ -176,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class ChatMessage {
   final String text;
   final DateTime received = DateTime.now();
-  ChatMessage({this.text});
+  ChatMessage(this.text);
 
   get time => DateFormat.Hms().format(received);
 }
@@ -189,24 +191,25 @@ class MessageComposer extends StatelessWidget {
   MessageComposer({this.textController, this.sendMessage, this.isButtonEnabled});
   build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              child: TextField(
-                  controller: textController,
-                  onSubmitted: sendMessage,
-                  enabled: isButtonEnabled,
-                  decoration:
-                      InputDecoration.collapsed(hintText: "Send a message")),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: TextField(
+              controller: textController,
+              onSubmitted: sendMessage,
+              enabled: isButtonEnabled,
+              decoration: InputDecoration.collapsed(hintText: "Send a message"),
             ),
-            Container(
-              child: IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: isButtonEnabled ? () => sendMessage(textController.text) : null
-              ),
-            )
-          ],
-        ));
+          ),
+          Container(
+            child: IconButton(
+              icon: Icon(Icons.send),
+              onPressed: isButtonEnabled ? () => sendMessage(textController.text) : null,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

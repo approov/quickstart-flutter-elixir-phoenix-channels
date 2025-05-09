@@ -4,7 +4,10 @@
 
 This is an Approov integration quickstart for Flutter and using a backend with [Elixir Phoenix Channels](https://hexdocs.pm/phoenix/channels.html). Additionally, a step-by-step tutorial guide using a [Echo Chamber App](https://github.com/approov/quickstart-flutter-elixir-phoenix-channels/blob/master/ECHO-CHAMBER-EXAMPLE.md) is also available.
 
-Note that the minimum OS requirement for iOS is 12 and for Android the minimum SDK version is 21 (Android 5.0). You cannot use Approov in apps that need to support OS versions older than this.
+Note that the minimum OS requirement for iOS is 12 and for Android the minimum SDK version is 23 (Android 6.0). You cannot use Approov in apps that need to support OS versions older than this.
+
+> ## ⚠️ CAUTION
+> **This quickstart does not currently work with Approov integration because the packages in https://github.com/approov/approov-flutter-packages need to be updated to be compatible with Flutter 3.0 versions. Please contact Approov support if you require an updated version.**
 
 ## ADDING APPROOV ENABLED ELIXIR PHOENIX CHANNELS
 
